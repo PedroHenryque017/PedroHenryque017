@@ -109,16 +109,24 @@ class Ball {
       this.ySpeed *= -1;
     }
 
-    if (this.x - this.radius < player1.x + player1.width / 2 &&
-        this.y > player1.y - player1.height / 2 &&
-        this.y < player1.y + player1.height / 2) {
-      this.xSpeed *= -1;
+    if (
+      this.x - this.radius < player1.x + player1.width / 2 &&
+      this.y + this.radius > player1.y - player1.height / 2 &&
+      this.y - this.radius < player1.y + player1.height / 2
+    ) {
+      if (this.xSpeed < 0) {
+        this.xSpeed *= -1;
+      }
     }
 
-    if (this.x + this.radius > player2.x - player2.width / 2 &&
-        this.y > player2.y - player2.height / 2 &&
-        this.y < player2.y + player2.height / 2) {
-      this.xSpeed *= -1;
+    if (
+      this.x + this.radius > player2.x - player2.width / 2 &&
+      this.y + this.radius > player2.y - player2.height / 2 &&
+      this.y - this.radius < player2.y + player2.height / 2
+    ) {
+      if (this.xSpeed > 0) {
+        this.xSpeed *= -1;
+      }
     }
 
     if (this.x - this.radius < 0) {
@@ -134,13 +142,14 @@ class Ball {
 
   checkCollision(paddle) {
     if (
-      this.x + this.radius > paddle.x - paddle.width / 2 &&
-      this.x - this.radius < paddle.x + paddle.width / 2 &&
-      this.y + this.radius > paddle.y - paddle.height / 2 &&
-      this.y - this.radius < paddle.y + paddle.height / 2
+      this.x + this.radius >= paddle.x - paddle.width / 2 &&
+      this.x - this.radius <= paddle.x + paddle.width / 2 &&
+      this.y + this.radius >= paddle.y - paddle.height / 2 &&
+      this.y - this.radius <= paddle.y + paddle.height / 2
     ) {
-      this.xSpeed *= -1;
+      return true;
     }
+    return false;
   }
 
   reset() {
@@ -155,4 +164,3 @@ class Ball {
     ellipse(this.x, this.y, this.radius * 2);
   }
 }
-
